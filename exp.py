@@ -11,7 +11,7 @@ if args.Q:
 else:
     io=process("./chutes")
 sla=lambda a,b : io.sendlineafter(a,b)
-
+https://github.com/Limesss/Dicectf-2022/blob/main/exp3.py
 
 def init_player(numb,name,choice="n"):
     sla("Number of players (max 10): ",str(numb))
